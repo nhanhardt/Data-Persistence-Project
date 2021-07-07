@@ -30,7 +30,7 @@ public class MenuUIHandler : MonoBehaviour
     {
         if (MenuManager.Instance != null)
         {
-            MenuManager.Instance.Name = MenuManager.Instance.NameText.text;
+            MenuManager.Instance.PlayerName = MenuManager.Instance.NameText.text;
         }
     }
 }

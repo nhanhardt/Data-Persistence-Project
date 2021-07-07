@@ -8,25 +8,22 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
-    public string Name;
-    public int Score;
-    //public Text HighScoreText;
+    public string PlayerName;
+    public int PlayerScore;
+    public string HighScoreName;
+    public int HighScore;
     public InputField NameText;
 
     private void Awake()
     {
-        // start of new code
         if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
-        // end of new code
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        //LoadColor();
     }
 
     [Serializable]
@@ -40,8 +37,8 @@ public class MenuManager : MonoBehaviour
     {
         SaveData data = new SaveData
         {
-            Name = Name,
-            Score = Score
+            Name = PlayerName,
+            Score = PlayerScore
         };
 
         string json = JsonUtility.ToJson(data);
@@ -59,14 +56,14 @@ public class MenuManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            Name = data.Name;
-            Score = data.Score;
+            HighScoreName = data.Name;
+            HighScore = data.Score;
 
             //Debug.Log("Name is " + data.Name);
             //Debug.Log("Score is " + data.Score);
 
-            var hsString = $"Best Score : { Score } Name : { Name }";
-            //Debug.Log(hsString);
+            var hsString = $"Best Score : { HighScore } Name : { HighScoreName }";
+            Debug.Log(hsString);
 
             //HighScoreText.text = hsString;
             return hsString;

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,17 +33,17 @@ public class MenuManager : MonoBehaviour
 
     public void SaveHighScore()
     {
-        SaveData data = new SaveData
+        if (PlayerScore > HighScore)
         {
-            Name = PlayerName,
-            Score = PlayerScore
-        };
+            var data = new SaveData
+            {
+                Name = PlayerName,
+                Score = PlayerScore
+            };
 
-        string json = JsonUtility.ToJson(data);
-
-        Debug.Log(json);
-
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+            var json = JsonUtility.ToJson(data);
+            File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        }
     }
 
     public string LoadHighScore()
@@ -53,19 +51,14 @@ public class MenuManager : MonoBehaviour
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
         {
-            string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
+            var json = File.ReadAllText(path);
+            var data = JsonUtility.FromJson<SaveData>(json);
 
             HighScoreName = data.Name;
             HighScore = data.Score;
 
-            //Debug.Log("Name is " + data.Name);
-            //Debug.Log("Score is " + data.Score);
-
             var hsString = $"Best Score : { HighScore } Name : { HighScoreName }";
-            Debug.Log(hsString);
 
-            //HighScoreText.text = hsString;
             return hsString;
         }
         return string.Empty;
